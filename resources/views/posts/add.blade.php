@@ -7,7 +7,8 @@
         <h1 class="p-3 text-center my-3">Add New posts</h1>
     </div>
     <div class="col-8 mx-auto">
-        <form action="{{ route('posts.create') }}" method="POST" class="form border p-3">
+        <form action="{{ route('posts.store') }}" method="POST" class="form border p-3">
+            @csrf
             <div class="mb-3">
                 <label for="title">Post Title</label>
                 <input type="text" id="title" name="title" class="form-control">

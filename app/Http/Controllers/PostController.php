@@ -14,8 +14,9 @@ class PostController extends Controller
     {
         return view('posts.add');
     }
-    public function store()
+    public function store(Request $request) // recieve request post so this routing must be post
     {
+        echo "yas";
        // return view('posts.add');
     }
     public function edit()
