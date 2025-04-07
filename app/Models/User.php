@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,5 +45,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function role()
+    {
+        if($this->role == 'writer'){
+        return "<span class='badge bg-warning'>" . $this->role ."</spane";
+        }else{
+            return "<span class='badge bg-success'>" . $this->role ."</spane";
+        }
     }
 }

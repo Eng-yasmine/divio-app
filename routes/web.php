@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,3 +18,4 @@ Route::delete('posts/destroy/{id}', [PostController::class, 'destroy'])->name('p
 //search
 
 Route::get('posts/search',[PostController::class,'search'])->name('posts.search');
+Route::resource('users',UserController::class);

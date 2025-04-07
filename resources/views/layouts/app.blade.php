@@ -24,6 +24,9 @@
                         <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('posts.view') }}">Posts</a>
                     </li>
 
