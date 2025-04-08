@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="col-12">
-        <a href="{{ route('users.create') }}" class="btn btn-primary my-3">Add users</a>
-        <h1 class="p-3 border text-center my-3">All Users</h1>
+        <a href="{{ route('posts.create') }}" class="btn btn-primary my-3">Add new <i class="mdi mdi-post:"></i></a>
+        <h1 class="p-3 border text-center my-3">All posts for user {{ $user->name }}</h1>
         @if (@session('success'))
             <div class="alert alert-success">
                 <h2>{{ session('success') }}</h2>
@@ -23,15 +23,23 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($users as $user)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>
-                            {!! $user->role() !!}
-                        </td>
+                @foreach ($user->posts as $post)
+                <tr>
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $post->title }}</td>
+                    <td>{{ $post->content }}</td>
+                    <td>{{ $post->created_at }}</td>
+                </tr>
 
+                        <td>
+                            <a href="{{ route('users.posts', $user->id) }}" class="btn btn-info">Show posts</a>
+
+                        </td>
+                        <td>
+                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info">Edit</a>
+
+                        </td>
                         <td>
 
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST">
@@ -41,13 +49,11 @@
                             </form>
 
                         </td>
-                       
+                        <td> </td>
                     </tr>
                 @endforeach()
             </tbody>
         </table>
-        <div>
-            {{ $users->links() }}
-        </div>
+       
     </div>
 @endsection

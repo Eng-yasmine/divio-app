@@ -51,6 +51,12 @@ class UserController extends Controller
     {
         //
     }
+    public function posts(string $id)
+    {
+        $user = User::where('id', $id)->firstOrFail();
+
+        return view('users.posts', compact('user'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -85,7 +91,7 @@ class UserController extends Controller
 
         unset($Data['confirm_password']);
         User::where('id', $user->id)->update($Data);
-        return redirect()->route('users.edit',$user->id)->with('success', 'User upated successfully');
+        return redirect()->route('users.edit', $user->id)->with('success', 'User upated successfully');
     }
 
     /**

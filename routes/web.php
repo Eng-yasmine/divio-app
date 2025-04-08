@@ -19,3 +19,4 @@ Route::delete('posts/destroy/{id}', [PostController::class, 'destroy'])->name('p
 
 Route::get('posts/search',[PostController::class,'search'])->name('posts.search');
 Route::resource('users',UserController::class);
+Route::get('users/posts/{id}',[UserController::class,'posts'])->name('users.posts');

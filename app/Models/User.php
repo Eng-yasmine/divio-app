@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use function PHPUnit\Framework\returnSelf;
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -53,5 +55,10 @@ class User extends Authenticatable
         }else{
             return "<span class='badge bg-success'>" . $this->role ."</spane";
         }
+    }
+
+    public function posts()
+    {
+     return $this->hasMany(Post::class);
     }
 }

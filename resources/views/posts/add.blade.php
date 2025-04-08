@@ -21,7 +21,7 @@
                 <h2>{{ session('success') }}</h2>
             </div>
         @endif
-        <form action="{{ route('posts.store') }}" method="POST" class="form border p-3">
+        <form action="{{ route('posts.store') }}" method="POST" class="form border p-3" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="title">Post Title</label>
@@ -32,10 +32,18 @@
                 <textarea name="content" class="form-control" rows="7">{{ old('content') }}</textarea>
             </div>
             <div class="mb-3">
+                <label for="">Post Image</label>
+                <input type="file" id="title" value="" name="image" class="form-control">
+
+            </div>
+            <div class="mb-3">
+
+
                 <label for="">Writer</label>
                 <select name="user_id" class="form-control">
-                    <option value="1">yasmeen</option>
-                    <option value="2">Sara</option>
+                    @foreach ($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
                 </select>
                 <div class="mb-3">
                     <input type="submit" value="Save" class="form-control bg-success">
