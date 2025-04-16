@@ -16,6 +16,7 @@
                     <th>Title</th>
                     <th>Discribtion</th>
                     <th>Writer</th>
+                    <th>Image</th>
                     <th>Edit</th>
                     <th>Delete</th>
 
@@ -29,6 +30,11 @@
                         <td>{{ $post->content }}</td>
                         <td>
                             {{ $post->user->name }}
+                        </td>
+
+                        <td>
+                            <img src="{{ asset('storage/' . $post->image()) }}" width="200">
+
                         </td>
                         <td>
                             <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-info">Edit</a>

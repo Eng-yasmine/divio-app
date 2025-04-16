@@ -46,14 +46,15 @@ class PostController extends Controller
         //     'content' => $request->content,
         //     'user_id' => $request->user_id
         // ]);
-       // dd($request->image);
-        $image_path = $request->file('image')->store('public');
-        dd($image_path);
+        // dd($request->image);
+
+        $image_path = $request->file('image')->store('image','public');
+        // dd($image_path);
         $posts = new Post();
         $posts->title = $request->title;
         $posts->content = $request->content;
         $posts->user_id = $request->user_id;
-        $posts->image = $request->image;
+        $posts->image = $image_path;
         $posts->save();
         return back()->with('success', 'post add successfully');
     }
@@ -83,11 +84,13 @@ class PostController extends Controller
         $posts = Post::where('content', 'like', '%' . $q . '%')->get();
         return view('posts.search', compact('posts'));
     }
-
+    // ''content' , 'like' , '%' . $q . '%'
     public function destroy($id)
     {
         $post = post::findOrFail($id);
         $post->delete();
         return back()->with('success', 'post deleted successfully');
     }
+
+  
 }

@@ -32,6 +32,15 @@
                             {!! $user->role() !!}
                         </td>
 
+                            <td>
+                                <a href="{{ route('users.posts', $user->id) }}" class="btn btn-info">Show posts</a>
+
+                            </td>
+                      
+                        <td>
+                            <a href="{{ route('users.edit',$user->id) }}" class="btn btn-primary">Edit</a>
+                        </td>
+
                         <td>
 
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST">
@@ -41,7 +50,7 @@
                             </form>
 
                         </td>
-                       
+
                     </tr>
                 @endforeach()
             </tbody>

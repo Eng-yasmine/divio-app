@@ -13,4 +13,11 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function image()
+    {
+        if ($this->image) {
+            return (asset($this->image));
+        }
+        return (asset('default.png'));
+    }
 }
