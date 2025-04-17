@@ -33,7 +33,7 @@
                         </td>
 
                         <td>
-                            <img src="{{ asset('storage/' . $post->image()) }}" width="200">
+                            <img src="{{ asset('storage/' . $post->image) }}" width="200">
 
                         </td>
                         <td>
