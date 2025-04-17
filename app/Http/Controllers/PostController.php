@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,8 @@ class PostController extends Controller
     public function create()
     {
         $users = User::select('id', 'name')->get();
-        return view('posts.add', compact('users'));
+        $tags = Tag::select('id', 'name')->get();
+        return view('posts.add', compact('users', 'tags'));
     }
 
     public function store(Request $request) // recieve request post so this routing must be post
@@ -39,7 +41,9 @@ class PostController extends Controller
             'content' => 'required|string|max:256|min:20',
             'image' => 'required|image|mimes:png,jpg',
             'user_id' => 'required|exists:users,id',
+            'tags'=>'nullable|array'
         ]);
+        // dd($request->all());
 
         // Post::create([
         //     'title' => $request->title,
@@ -48,7 +52,8 @@ class PostController extends Controller
         // ]);
         // dd($request->image);
 
-        $image_path = $request->file('image')->store('image','public');
+        // dd($request->tags);
+        $image_path = $request->file('image')->store('image', 'public');
         // dd($image_path);
         $posts = new Post();
         $posts->title = $request->title;
@@ -56,14 +61,20 @@ class PostController extends Controller
         $posts->user_id = $request->user_id;
         $posts->image = $image_path;
         $posts->save();
+
+        if ($request->has('tags')) {
+            $posts->tags()->async($request->tags);
+        }
         return back()->with('success', 'post add successfully');
     }
 
     public function edit($id)
     {
         $post = post::findOrFail($id);
+        $tags =Tag::select('id','name')->get();
+        $users = User::select('id','name')->get();
 
-        return view('posts.edit', compact('post'));
+        return view('posts.edit', compact('post' ,'tags' ,'users'));
     }
 
     public function update(Request $request, $id)
@@ -91,6 +102,4 @@ class PostController extends Controller
         $post->delete();
         return back()->with('success', 'post deleted successfully');
     }
-
-
 }

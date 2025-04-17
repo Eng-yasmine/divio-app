@@ -36,13 +36,22 @@
                 <input type="file" id="title" value="" name="image" class="form-control">
 
             </div>
+
+
             <div class="mb-3">
+                <label for="">Tags</label>
+                <select name="tags[]" multiple class="form-control">
+                    @foreach ($tags as $tag)
+                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
-
+            <div class="mb-3">
                 <label for="">Writer</label>
                 <select name="user_id" class="form-control">
                     @foreach ($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                 </select>
                 <div class="mb-3">

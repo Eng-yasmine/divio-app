@@ -10,6 +10,7 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
+                    <th>posts</th>
                     <th>Edit</th>
                     <th>Delete</th>
 
@@ -21,9 +22,11 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $tag->name }}</td>
 
-
-
-
+                        <td>
+                            @foreach ($tag->posts as $post)
+                                <span class="badge bg-success my-1">{{ $post->title }}</span>
+                            @endforeach
+                        </td>
                         <td>
                             <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-primary">Edit</a>
                         </td>

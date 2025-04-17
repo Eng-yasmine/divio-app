@@ -15,6 +15,7 @@
                     <th>#</th>
                     <th>Title</th>
                     <th>Discribtion</th>
+                    <th>Tags</th>
                     <th>Writer</th>
                     <th>Image</th>
                     <th>Edit</th>
@@ -28,6 +29,11 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->content }}</td>
+                        <td>
+                            @foreach ($post->tags as $tag)
+                                <span class="badge bg-warning my-1">{{ $tag->name }}</span>
+                            @endforeach
+                        </td>
                         <td>
                             {{ $post->user->name }}
                         </td>
