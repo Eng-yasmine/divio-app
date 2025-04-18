@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\File;
 
 use App\Models\Post;
 use App\Models\Tag;
@@ -41,7 +42,7 @@ class PostController extends Controller
             'content' => 'required|string|max:256|min:20',
             'image' => 'required|image|mimes:png,jpg',
             'user_id' => 'required|exists:users,id',
-            'tags'=>'nullable|array'
+            'tags' => 'nullable|array'
         ]);
         // dd($request->all());
 
@@ -63,18 +64,20 @@ class PostController extends Controller
         $posts->save();
 
         if ($request->has('tags')) {
-            $posts->tags()->async($request->tags);
+            // dd($request->tags);
+
+            $posts->tags()->sync($request->tags);
         }
         return back()->with('success', 'post add successfully');
     }
 
     public function edit($id)
     {
-        $post = post::findOrFail($id);
-        $tags =Tag::select('id','name')->get();
-        $users = User::select('id','name')->get();
+        $post  = post::findOrFail($id);
+        $tags  = Tag::select('id', 'name')->get();
+        $users = User::select('id', 'name')->get();
 
-        return view('posts.edit', compact('post' ,'tags' ,'users'));
+        return view('posts.edit', compact('post', 'tags', 'users'));
     }
 
     public function update(Request $request, $id)
@@ -83,8 +86,19 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
         $post->user_id = $request->user_id;
+        $old_image = $post->image ;
+        if($request->hasFile('image')){
+           $new_image = $request->file('image')->store('image','public');
+           File::delete($old_image);
+           $post->image = $new_image ;
+        }
+
         $post->save();
         // dd($post);
+
+
+        $post->tags()->detach($request->tags); //عشان يمسح التاج القديم ويضيف عليهم الجديد
+        $post->tags()->sync($request->tags);
         return redirect()->route('posts.view')->with('success', 'post  updated successfully');
     }
 

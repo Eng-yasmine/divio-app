@@ -34,10 +34,7 @@
             <div class="mb-3">
                 <label for="">Post Image</label>
                 <input type="file" id="title" value="" name="image" class="form-control">
-
             </div>
-
-
             <div class="mb-3">
                 <label for="">Tags</label>
                 <select name="tags[]" multiple class="form-control">
@@ -46,7 +43,6 @@
                     @endforeach
                 </select>
             </div>
-
             <div class="mb-3">
                 <label for="">Writer</label>
                 <select name="user_id" class="form-control">

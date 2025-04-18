@@ -7,21 +7,8 @@
         <h1 class="p-3 text-center my-3">Edit posts Info</h1>
     </div>
     <div class="col-8 mx-auto">
-        @if (@session('success'))
-            <div class="alert alert-success">
-                <h2>{{ session('success') }}</h2>
-            </div>
-        @endif
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        <form action="{{ url('posts', $post->id) }}" method="POST" class="form border p-3">
+        @include('inc.message')
+        <form action="{{ url('posts', $post->id) }}" method="POST" class="form border p-3" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -33,15 +20,30 @@
                 <textarea name="content" class="form-control" rows="7">{{ $post->content }}</textarea>
             </div>
             <div class="mb-3">
+                <label for="">Post Image</label>
+                <input type="file" id="title" value="" name="image" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="">Tags</label>
+                <select name="tags[]" multiple class="form-control">
+                    @foreach ($tags as $tag)
+                        <option @if ($post->tags->contains($tag)) selected @endif value="{{ $tag->id }}">
+                            {{ $tag->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
                 <label for="">Writer</label>
                 <select name="user_id" class="form-control">
                     @foreach ($users as $user)
                         <option @selected($user->id == $post->user_id) value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                 </select>
-                <div class="mb-3">
-                    <input type="submit" value="Save" class="form-control bg-success">
-                </div>
+            </div>
+
+            <div class="mb-3">
+                <input type="submit" value="Save" class="form-control bg-success">
             </div>
 
 
