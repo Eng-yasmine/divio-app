@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\UserController;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 
 
 
@@ -22,3 +25,7 @@ Route::get('posts/search',[PostController::class,'search'])->name('posts.search'
 Route::resource('users',UserController::class);
 Route::resource('tags',TagController::class);
 Route::get('users/posts/{id}',[UserController::class,'posts'])->name('users.posts');
+
+Auth::routes();
+
+Route::get('home', [HomeController::class, 'index'])->name('home');
