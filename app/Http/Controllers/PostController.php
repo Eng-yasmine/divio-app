@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -29,6 +30,7 @@ class PostController extends Controller
 
     public function create()
     {
+        Gate::authorize('create-post');
         $users = User::select('id', 'name')->get();
         $tags = Tag::select('id', 'name')->get();
         return view('posts.add', compact('users', 'tags'));
@@ -36,6 +38,7 @@ class PostController extends Controller
 
     public function store(Request $request) // recieve request post so this routing must be post
     {
+        Gate::authorize('create-post');
         //dd($request->all());
         $request->validate([
             'title' => 'required|string|max:256|min:6',

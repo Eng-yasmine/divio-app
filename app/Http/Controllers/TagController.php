@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Tag;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TagController extends Controller
 {
+    public function __construct()
+    {
+        Gate::authorize('admin-control');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -56,15 +61,14 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Tag $tag)
+    public function update(Request $request, Tag $tag)
     {
         $data = $request->validate([
-            'name'=>'required|string|min:3'
+            'name' => 'required|string|min:3'
         ]);
         $tag->update($data);
         $tag->save();
-        return redirect()->route('tags.index')->with('success','Tag Updated successfully');
-
+        return redirect()->route('tags.index')->with('success', 'Tag Updated successfully');
     }
 
     /**

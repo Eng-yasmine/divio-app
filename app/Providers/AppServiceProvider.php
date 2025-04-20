@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,7 +15,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        Gate::define('create-post', function (User $user) {
+            return $user->role == 'writer';
+        });
+        Gate::define('admin-control', function (User $user) {
+            return $user->role == 'admin';
+        });
+        Gate::define('update-post', function (User $user, Post $post) {
+            return $user->id == $post->user_id;
+        });
     }
 
     /**

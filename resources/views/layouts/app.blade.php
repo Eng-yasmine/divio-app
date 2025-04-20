@@ -33,15 +33,23 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="{{ url('/') }}">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('users.index') }}">Users</a>
-                        </li>
+                        @auth
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('posts.view') }}">Posts</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
                         </li>
+
+
+
+                        @endauth
                     </ul>
 
                     <!-- Search Form -->
