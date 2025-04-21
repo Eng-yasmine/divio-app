@@ -2,7 +2,9 @@
 
 @section('content')
     <div class="col-12">
-        <a href="{{ route('tags.create') }}" class="btn btn-primary my-3">Add Tag</a>
+        @can('create', Tag::class)
+            <a href="{{ route('tags.create') }}" class="btn btn-primary my-3">Add Tag</a>
+        @endcan
         <h1 class="p-3 border text-center my-3">All Tags</h1>
         @include('inc.message')
         <table class="table table-borderd">
@@ -28,7 +30,10 @@
                             @endforeach
                         </td>
                         <td>
+                            @can('view')
+
                             <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-primary">Edit</a>
+                            @endcan
                         </td>
 
                         <td>

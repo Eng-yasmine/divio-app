@@ -47,7 +47,7 @@
                         <td>
                             @can('update-post', $post)
                                 <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-info">Edit</a>
-                            @endcan
+
 
                         </td>
                         <td>
@@ -57,7 +57,7 @@
                                 @csrf
                                 <input type="submit" class="btn btn-danger" value="Delete">
                             </form>
-
+                            @endcan
                         </td>
                         <td></td>
                     </tr>

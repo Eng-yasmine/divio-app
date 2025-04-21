@@ -13,6 +13,11 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <style>
+        .active{
+            font-weight: bold;
+        }
+    </style>
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -35,15 +40,15 @@
                         </li>
                         @auth
 
-                        <li class="nav-item">
+                        <li class="nav-item @if (request()->is('posts')) active @endif" >
                             <a class="nav-link" href="{{ route('posts.view') }}">Posts</a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item @if(request()->is('users')) active @endif">
                             <a class="nav-link" href="{{ route('users.index') }}">Users</a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item @if(request()->is('tags')) active @endif">
                             <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
                         </li>
 

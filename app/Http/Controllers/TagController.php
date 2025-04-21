@@ -55,6 +55,7 @@ class TagController extends Controller
     public function edit(string $id)
     {
         $tag = Tag::findOrFail($id);
+        Gate::authorize('view', $tag);
         return view('tags.edit', compact('tag'));
     }
 
@@ -63,6 +64,8 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
+        Gate::authorize('view', $tag);
+
         $data = $request->validate([
             'name' => 'required|string|min:3'
         ]);
