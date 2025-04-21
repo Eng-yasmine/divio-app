@@ -40,15 +40,15 @@
                         </li>
                         @auth
 
-                        <li class="nav-item @if (request()->is('posts')) active @endif" >
+                        <li class="nav-item @if (request()->is('posts*')) active @endif" >
                             <a class="nav-link" href="{{ route('posts.view') }}">Posts</a>
                         </li>
 
-                        <li class="nav-item @if(request()->is('users')) active @endif">
+                        <li class="nav-item @if(request()->is('users*')) active @endif">
                             <a class="nav-link" href="{{ route('users.index') }}">Users</a>
                         </li>
 
-                        <li class="nav-item @if(request()->is('tags')) active @endif">
+                        <li class="nav-item @if(request()->is('tags*')) active @endif">
                             <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
                         </li>
 
