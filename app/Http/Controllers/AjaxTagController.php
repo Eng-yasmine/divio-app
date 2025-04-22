@@ -36,13 +36,13 @@ class AjaxTagController extends Controller
      */
     public function store(Request $request)
     {
-        dd('ghghghghgh');
+        // dd('ghghghghgh');
         $data =  $request->validate([
             'name' => 'required|string|min:3'
         ]);
         Tag::create($data);
         // return back()->with('success', 'tag added successfully');
-        return response()->json(['message' => 'تم إضافة الوسم بنجاح']);
+        return response()->json(['message' => '  tag added successfully ']);
     }
 
     /**
