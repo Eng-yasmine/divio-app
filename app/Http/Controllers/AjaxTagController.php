@@ -66,26 +66,28 @@ class AjaxTagController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tag $tag)
-    {
+    public function update(Request $request, Tag $ajax_tag)
+{
+    // $tag = Tag::findOrFail($id);
 
+    $data = $request->validate([
+        'name' => 'required|string|min:3'
+    ]);
 
-        $data = $request->validate([
-            'name' => 'required|string|min:3'
-        ]);
-        $tag->update($data);
-        $tag->save();
-        return redirect()->route('ajax-tags.index')->with('success', 'Tag Updated successfully');
-    }
+    $ajax_tag->update($data); // كفاية دي بس، مش لازم بعدها save()
+    $ajax_tag->save();
+    return response()->json(['message' => 'Tag updated successfully']);
+}
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tag $tag)
+    public function destroy(Tag $ajax_tag)
     {
-        $tag->delete();
+        $ajax_tag->delete();
 
-        return back()->with('success', 'Tag deleted succefully');
+        return response()->json(['message' => 'Tag deleted successfully']);
     }
 }
 
