@@ -7,55 +7,57 @@
         <h1 class="p-3 text-center my-3">Add New tag</h1>
     </div>
     <div class="col-8 mx-auto">
-        @include('inc.message')
+        <div id="message-area"></div>
+
         <form action="{{ route('ajax-tags.store') }}" method="POST" id="send-data" class="form border p-3">
             @csrf
             <div class="mb-3">
                 <label for="name">Tag Name</label>
-                <input type="text" id="name" value="{{ old('name') }}" name="name" class="form-control">
+                <input type="text" id="name" value="" name="name" class="form-control">
             </div>
             <div class="mb-3">
                 <input type="submit" value="Save" class="form-control bg-success">
             </div>
-    </div>
+        </form>
 
-
-
-    </form>
 
     </div>
 @endsection
 
+
 @section('script')
-<script>
-    let formElement = document.getElementById("send-data");
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let formElement = document.getElementById("send-data");
 
-    formElement.addEventListener("submit", function(e) {
-        e.preventDefault();
+            formElement.addEventListener("submit", function(e) {
+                e.preventDefault();
 
-        let input = document.querySelector("input[name='name']");
-        let token = document.querySelector("input[name='_token']");
+                let input = document.querySelector("input[name='name']");
+                let token = document.querySelector("input[name='_token']");
 
-        fetch(formElement.action, {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": token.value,
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name: input.value
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            // مثال: alert(data.success ? 'تم الحفظ' : 'فشل');
-        })
-        .catch(err => {
-            console.error("Error:", err);
+                fetch(formElement.action, {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": token.value,
+                            "Accept": "application/json",
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            name: input.value
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById("message-area").innerHTML = `
+                                    <div class="alert alert-success">Tag added successfully   </div`;
+
+                    })
+                    .catch(err => {
+                        document.getElementById("message-area").innerHTML = `<div class="alert alert-danger">error ocured while adding Tag</div>`;
+                    });
+
+            });
         });
-    });
-</script>
-
+    </script>
 @endsection
