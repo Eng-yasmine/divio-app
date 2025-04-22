@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\AjaxTagController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class)->middleware('can:admin-control');
     Route::resource('tags', TagController::class)->middleware('can:admin-control');
     Route::get('users/posts/{id}', [UserController::class, 'posts'])->name('users.posts');
+    Route::resource('ajax-tags',AjaxTagController::class);
 });
 Auth::routes();
 
