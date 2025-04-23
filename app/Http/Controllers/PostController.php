@@ -1,24 +1,28 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\File;
+
+use App\Models\Tag;
 
 use App\Models\Post;
-use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
+use Barryvdh\Debugbar\Facades\Debugbar;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->paginate(20);
+        Debugbar::startMeasure('render', 'Time for rendering');
+        $posts = Post::with('user','tags')->latest()->paginate(20); //aggregate
+        Debugbar::stopMeasure('render');
         return view('home', compact('posts'));
     }
     public function view()
     {
-        $posts = Post::latest()->paginate(20);
+        $posts = Post::with('user','tags')->latest()->paginate(20);
         return view('posts.index', compact('posts'));
     }
 
@@ -89,11 +93,11 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
         $post->user_id = $request->user_id;
-        $old_image = $post->image ;
-        if($request->hasFile('image')){
-           $new_image = $request->file('image')->store('image','public');
-           File::delete($old_image);
-           $post->image = $new_image ;
+        $old_image = $post->image;
+        if ($request->hasFile('image')) {
+            $new_image = $request->file('image')->store('image', 'public');
+            File::delete($old_image);
+            $post->image = $new_image;
         }
 
         $post->save();
