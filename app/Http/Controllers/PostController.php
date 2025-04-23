@@ -13,13 +13,7 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 
 class PostController extends Controller
 {
-    public function index()
-    {
-        Debugbar::startMeasure('render', 'Time for rendering');
-        $posts = Post::with('user','tags')->latest()->paginate(20); //aggregate
-        Debugbar::stopMeasure('render');
-        return view('home', compact('posts'));
-    }
+    
     public function view()
     {
         $posts = Post::with('user','tags')->latest()->paginate(20);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AjaxTagController;
+use App\Http\Controllers\front\HomeController as FrontHomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
@@ -10,7 +11,7 @@ use App\Http\Controllers\UserController;
 
 
 
-Route::get('/', [PostController::class, 'index'])->name('posts.index');
+Route::get('/', [FrontHomeController::class, 'index'])->name('posts.index');
 Route::get('posts/search', [PostController::class, 'search'])->name('posts.search');
 
 Route::middleware('auth')->group(function () {
