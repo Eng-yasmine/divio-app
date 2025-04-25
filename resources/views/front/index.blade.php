@@ -8,8 +8,8 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="site-heading">
                     <h1>{{ config('app.name') }}</h1>
-                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
-                    <form class="d-flex me-3 my-3" action="{{ route('posts.search') }}" role="search">
+                    <span class="subheading">practical project using Laravel</span>
+                    <form class="d-flex me-3 my-3" action="{{ route('front.search') }}" role="search">
                         <input class="form-control me-2" name="q" type="search" placeholder="Search"
                             aria-label="Search">
                         <button class="btn btn-primary" type="submit">Search</button>
@@ -27,11 +27,11 @@
             @foreach ($posts as $post)
 
             <div class="post-preview">
-                <a href="post.html">
+
                     <h2 class="post-title">{{ $post->title }}</h2>
                     <img src="{{$post->image() }}" alt="">
                     <h3 class="post-subtitle">{{ Str::limit($post->content,200) }}</h3>
-                </a>
+
                 <p class="post-meta">
                     Posted by
                     <a href="#!">{{ $post->user->name }}</a>

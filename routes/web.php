@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\front\PostController As FrontPostController;
 use App\Http\Controllers\UserController;
 
 
@@ -15,12 +16,13 @@ Route::get('/', [FrontHomeController::class, 'index'])->name('front.home');
 Route::get('/about', [FrontHomeController::class, 'about'])->name('front.about');
 Route::get('/contact', [FrontHomeController::class, 'contact'])->name('front.contact');
 Route::post('/contact',[FrontHomeController::class,'SendMessage'])->name('SendMail');
-Route::get('posts/search', [PostController::class, 'search'])->name('posts.search');
+Route::get('search', [FrontPostController::class, 'search'])->name('front.search');
 
 Route::middleware('auth')->group(function () {
 
 
     Route::get('posts', [PostController::class, 'view'])->name('posts.view');
+    Route::get('posts/export', [PostController::class, 'export'])->name('posts.export');
     Route::get('posts/show/{id}', [PostController::class, 'show'])->name('posts.show');
     Route::get('posts/add', [PostController::class, 'create'])->name('posts.create');
     Route::post('posts', [PostController::class, 'store'])->name('posts.store');

@@ -5,6 +5,7 @@
         @can('create-post')
             <a href="{{ route('posts.create') }}" class="btn btn-primary my-3">Add Post</a>
         @endcan
+        <a href="{{ route('posts.export') }}" class="btn btn-success my-3">Excell Export</a>
         <h1 class="p-3 border text-center my-3">All posts</h1>
         @if (@session('success'))
             <div class="alert alert-success">

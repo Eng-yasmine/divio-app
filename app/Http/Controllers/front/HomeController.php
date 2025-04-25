@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Mail\SendMessageMail;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
@@ -16,7 +17,7 @@ class HomeController extends Controller
     public function index()
     {
 
-        $posts = Post::with('user','tags')->latest()->paginate(10); //aggregate
+        $posts = Post::with('user', 'tags')->latest()->paginate(10); //aggregate
 
         return view('front.index', compact('posts'));
     }
@@ -46,9 +47,16 @@ class HomeController extends Controller
             'phone' => 'required|string|max:20',
             'message' => 'required|string|min:10|max:200',
         ]);
-        Mail::to('yasmeen@yahoo.com')->send(new SendMessageMail($message));
+        try {
 
-        return back()->with('success','message has been sent');
+            Mail::to('yasmeen@yahoo.com')->send(new SendMessageMail($message));
+
+        } catch (Exception $e) {
+            
+            return back()->withErrors('email failed to send');
+        }
+
+        return back()->with('success', 'message has been sent');
     }
 
     /**

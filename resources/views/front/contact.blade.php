@@ -28,6 +28,7 @@
                     <!-- https://startbootstrap.com/solution/contact-forms-->
                     <!-- to get an API token!-->
                     <form action="{{ route('SendMail') }}" method="POST" id="contactForm" >
+                        @include('inc.message')
                         @csrf
                         <div class="form-floating">
                             <input class="form-control" name="name" id="name" value="{{ old('name') }}" type="text" placeholder="Enter your name..." />

@@ -6,18 +6,28 @@ use App\Models\Tag;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Exports\PostExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\Debugbar\Facades\Debugbar;
+
 
 class PostController extends Controller
 {
-    
+
     public function view()
     {
-        $posts = Post::with('user','tags')->latest()->paginate(20);
+        $posts = Post::with('user','tags')->latest()->paginate(12);
         return view('posts.index', compact('posts'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new PostExport, 'posts.xlsx');
+
+
     }
 
     public function show($id)
