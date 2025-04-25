@@ -11,7 +11,10 @@ use App\Http\Controllers\UserController;
 
 
 
-Route::get('/', [FrontHomeController::class, 'index'])->name('posts.index');
+Route::get('/', [FrontHomeController::class, 'index'])->name('front.home');
+Route::get('/about', [FrontHomeController::class, 'about'])->name('front.about');
+Route::get('/contact', [FrontHomeController::class, 'contact'])->name('front.contact');
+Route::post('/contact',[FrontHomeController::class,'SendMessage'])->name('SendMail');
 Route::get('posts/search', [PostController::class, 'search'])->name('posts.search');
 
 Route::middleware('auth')->group(function () {

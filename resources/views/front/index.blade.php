@@ -1,200 +1,54 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js')}} lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js')}} lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js')}} lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js')}}"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>PHOTOGRAPHER - Responsive html Bootstrap 3 based theme</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="stylesheet" href="{{asset('front/css/bootstrap.min.css')}}">
-        <link href="{{asset('front/css/font-awesome.min.css')}}" rel="stylesheet">
-        <!-- Important Owl stylesheet -->
-        <link rel="stylesheet" href="{{asset('front/owl-carousel/owl.carousel.css')}}">
-
-        <!-- Default Theme -->
-        <link rel="stylesheet" href="{{asset('front/owl-carousel/owl.theme.css')}}">
-        <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=News+Cycle:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{{asset('front/css/main.css')}}">
-
-        <script src="{{('front/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js')}}"></script>
-    </head>
+@extends('front.layouts.app')
 
 
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-
-        <div id="top" class="navbar navbar-dark navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <i class="fa fa-bars fa-2x"></i>
-                    </button>
-                    <a class="navbar-brand" href="#"><strong>PHOTO</strong>GRAPHER</a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="#carousel-header">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#blog">Blog</a></li>
-                        <li><a href="#social">Social</a></li>
-                    </ul>
-                </div><!--/.navbar-collapse -->
-            </div>
-        </div>
-
-
-
-        <div id="carousel-header" class="carousel slide" data-ride="carousel" data-interval="8000">
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                <div class="camera-icon hidden-sm hidden-xs">
-                    <div class="circle">
-                        <div class="hexagon">
-                            <i class="fa  fa-camera"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="item active">
-                    <img src="{{asset('front/img/slide1.jpg')}}" alt="">
-                </div>
-
-                <div class="item">
-                    <img src="{{asset('front/img/slide2.jpg')}}" alt="">
-                </div>
-            </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-header" role="button" data-slide="next">
-                <img src="{{asset('front/img/left.png')}}" alt="Previous">
-            </a>
-            <a class="right carousel-control" href="#carousel-header" role="button" data-slide="next">
-                <img src="{{asset('front/img/right.png')}}" alt="Next">
-            </a>
-        </div>
-
-
-
-
-        <div id="about" class="content-block content-block-cyan">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
-                        <h1>The winter photographer</h1>
-                        <p>
-                            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis.
-                        </p>
-                    </div>
+@section('content')
+<header class="masthead" style="background-image: url({{ asset('front/assets/img/home-bg.jpg') }})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>{{ config('app.name') }}</h1>
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                    <form class="d-flex me-3 my-3" action="{{ route('posts.search') }}" role="search">
+                        <input class="form-control me-2" name="q" type="search" placeholder="Search"
+                            aria-label="Search">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Post preview-->
+            @foreach ($posts as $post)
 
-
-        <div id="projects" class="recent-projects">
-            <div class="recent-projects-title">
-                Recent Projects
+            <div class="post-preview">
+                <a href="post.html">
+                    <h2 class="post-title">{{ $post->title }}</h2>
+                    <img src="{{$post->image() }}" alt="">
+                    <h3 class="post-subtitle">{{ Str::limit($post->content,200) }}</h3>
+                </a>
+                <p class="post-meta">
+                    Posted by
+                    <a href="#!">{{ $post->user->name }}</a>
+                    on {{ $post->created_at->format('Y-m-d') }}
+                </p>
             </div>
-
-            <div class="recent-projects-content content-block-gray">
-                <div id="front/owl-example" class="owl-carousel">
-                    <div>
-                        <img src="{{asset('front/img/recent1.jpg')}}" alt="">
-                        <a href="#">Cartoon de loop</a>
-                    </div>
-                    <div>
-                        <img src="{{asset('front/img/recent2.jpg')}}" alt="">
-                        <a href="#">In to the snow</a>
-                    </div>
-                    <div>
-                        <img src="{{asset('front/img/recent3.jpg')}}" alt="">
-                        <a href="#">girl in sunset</a>
-                    </div>
-                    <div>
-                        <img src="{{asset('front/img/recent4.jpg')}}" alt="">
-                        <a href="#">Tools</a>
-                    </div>
-                    <div>
-                        <img src="{{asset('front/img/recent5.jpg')}}" alt="">
-                        <a href="#">Sunrise in west</a>
-                    </div>
-                    <div>
-                        <img src="{{asset('front/img/recent6.jpg')}}" alt="">
-                        <a href="#">girl in sunset</a>
-                    </div>
-                    <div>
-                        <img src="{{asset('front/img/recent4.jpg')}}" alt="">
-                        <a href="#">Lorem Ipsum</a>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.recent-projects -->
+            <!-- Divider-->
+            <hr class="my-4" />
+            @endforeach
 
 
 
-        <div id="blog" class="content-block content-block-gray">
-            <div class="container">
-                <header class="block-heading cleafix">
-                    <a href="#" class="btn btn-o btn-lg pull-right">View All</a>
-                    <h1>From the Blog</h1>
-                    <p>Keep up with the latest happenings.</p>
-                </header>
-                <section class="block-body">
-                    <div class="row">
-                        <div class="col-sm-4 blog-post">
-                            <img src="{{asset('front/img/bike_water1-1000x600.jpg')}}" alt="Design Your Mind">
-                            <a href="#"><h2>Design Your Mind</h2></a>
-                            <div class="date">3 Nov, 2014</div>
-                        </div>
-                        <div class="col-sm-4 blog-post">
-                            <img src="{{asset('front/img/mac_glasses1-1000x600.jpg')}}" alt="Winter Is Comming">
-                            <a href="#"><h2>Winter Is Comming</h2></a>
-                            <div class="date">3 Nov, 2014</div>
-                        </div>
-                        <div class="col-sm-4 blog-post">
-                            <img src="{{asset('front/img/road-1000x600.jpg')}}" alt="The Illustration">
-                            <a href="#"><h2>The Illustration</h2></a>
-                            <div class="date">3 Nov, 2014</div>
-                        </div>
-                    </div>
-                </section>
-            </div><!--/container-->
-        </div><!-- /.content-block content-blog-gray -->
-
-
-        <div id="social" class="content-block">
-            <div class="container text-center">
-                <div class="hexagon"><a href="#"><i class="fa fa-facebook"></i></a></div>
-                <div class="hexagon"><a href="#"><i class="fa fa-twitter"></i></a></div>
-                <div class="hexagon"><a href="#"><i class="fa fa-google-plus"></i></a></div>
-                <div class="hexagon"><a href="#"><i class="fa fa-instagram"></i></a></div>
-                <div class="hexagon"><a href="#"><i class="fa fa-pinterest"></i></a></div>
-                <div class="hexagon"><a href="#"><i class="fa fa-envelope"></i></a></div>
-            </div>
+            <!-- Pager-->
+            <div class=" mb-4">
+                {{$posts->links()}}</div>
         </div>
+    </div>
+</div>
 
-
-        <footer class="content-block content-block-dark">
-            <p>&copy; Copyright Photographer 2014. Theme by <a href="https://themewagon.com/" target="_blank"> ThemeWagon</a></p>
-        </footer>
-
-        <script src="{{('front/js/jquery-2.1.3.min.js')}}"></script>
-        <script>window.jQuery || document.write('<script src="{{('front/js/vendor/jquery-1.11.0.min.js')}}"><\/script>')</script>
-
-        <script src="{{('front/js/vendor/bootstrap.min.js')}}"></script>
-        <!-- Include js')}} plugin -->
-        <script src="{{asset('front/owl-carousel/owl.carousel.js')}}"></script>
-
-        <script src="{{('front/js//main.js')}}"></script>
-
-    </body>
-</html>
+@endsection
