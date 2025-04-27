@@ -29,7 +29,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="index.html">{{ $setting->sit_name }}</a>
+            <a class="navbar-brand" href="index.html">{{ $settings->sit_name }}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
@@ -38,24 +38,66 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link px-lg-3 py-3 py-lg-4 @if(request()->is('/')) text-info @endif" href="{{ route('front.home') }}">Home</a>
+                        <a class="nav-link px-lg-3 py-3 py-lg-4 @if (request()->is('/')) text-info @endif"
+                            href="{{ route('front.home') }}">Home</a>
                     </li>
 
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4 @if(request()->is('about')) text-info @endif"
+                    <li class="nav-item"><a
+                            class="nav-link px-lg-3 py-3 py-lg-4 @if (request()->is('about')) text-info @endif"
                             href="{{ route('front.about') }}">About</a></li>
+                    @auth
 
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4  @if(request()->is('contact')) text-info @endif"
-                            href="{{ route('front.contact') }}">Contact</a></li>
-                            @guest
-                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                                href="{{ route('login') }}">Login</a></li>
 
-                                @else
-                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4 text-primary" href="{{ route('posts.view') }}">DashBoard</a></li>
+                        <li class="nav-item"><a
+                                class="nav-link px-lg-3 py-3 py-lg-4  @if (request()->is('contact')) text-info @endif"
+                                href="{{ route('front.contact') }}">Contact</a></li>
 
-                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                                    href="">{{ Auth::user()->name }}</a></li>
-                            @endguest
+                                <li class="nav-item"><a
+                                    class="nav-link px-lg-3 py-3 py-lg-4  @if (request()->is('contact')) text-info @endif"
+                                    href="{{ route('posts.create') }}">ADD POST</a></li>
+
+                                    {{-- <li class="nav-item"><a
+                                        class="nav-link px-lg-3 py-3 py-lg-4  @if (request()->is('contact')) text-info @endif"
+                                        href="{{ route('tags.create') }}">ADD Tag</a></li> --}}
+                    @endauth
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-lg-3 py-3 py-lg-4" href="{{ route('register') }}">Register</a>
+                        </li>
+                    @else
+                        @can('admin-control')
+                            <li class="nav-item">
+                                <a class="nav-link px-lg-3 py-3 py-lg-4 text-primary"
+                                    href="{{ route('posts.view') }}">DashBoard</a>
+                            </li>
+                        @endcan
+
+                        <!-- Dropdown for User Name and Logout -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ Auth::user()->name }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <!-- If you want to add a profile link -->
+                                <li>
+                                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item" style="cursor: pointer;">
+                                            Logout
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @endguest
+
+
+
                 </ul>
             </div>
         </div>
@@ -71,7 +113,7 @@
                     <ul class="list-inline text-center">
                         <li class="list-inline-item">
 
-                            <a href='{{ $setting->twitter }}'>
+                            <a href='{{ $settings->twitter }}'>
                                 <span class="fa-stack fa-lg">
                                     <i class="fas fa-circle fa-stack-2x"></i>
                                     <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
@@ -79,7 +121,7 @@
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="{{ $setting->facebook }}">
+                            <a href="{{ $settings->facebook }}">
                                 <span class="fa-stack fa-lg">
                                     <i class="fas fa-circle fa-stack-2x"></i>
                                     <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
@@ -87,7 +129,7 @@
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="{{ $setting->instagram }}">
+                            <a href="{{ $settings->instagram }}">
                                 <span class="fa-stack fa-lg">
                                     <i class="fas fa-circle fa-stack-2x"></i>
                                     <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
@@ -95,7 +137,7 @@
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="{{ $setting->linkedin }}">
+                            <a href="{{ $settings->linkedin }}">
                                 <span class="fa-stack fa-lg">
                                     <i class="fas fa-circle fa-stack-2x"></i>
                                     <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -103,7 +145,8 @@
                             </a>
                         </li>
                     </ul>
-                    <div class="small text-center text-muted fst-italic">Copyright &copy; DIVIO {{ date('Y') }}</div>
+                    <div class="small text-center text-muted fst-italic">Copyright &copy; DIVIO {{ date('Y') }}
+                    </div>
                 </div>
             </div>
         </div>

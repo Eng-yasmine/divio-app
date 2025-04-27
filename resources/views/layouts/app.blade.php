@@ -45,26 +45,31 @@
                             <li class="nav-item @if (request()->is('posts*')) active @endif">
                                 <a class="nav-link" href="{{ route('posts.view') }}">Posts</a>
                             </li>
+                            @can('admin-control')
+                                <li class="nav-item @if (request()->is('users*')) active @endif">
+                                    <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                                </li>
 
-                            <li class="nav-item @if (request()->is('users*')) active @endif">
-                                <a class="nav-link" href="{{ route('users.index') }}">Users</a>
-                            </li>
+                                <li class="nav-item @if (request()->is('tags*')) active @endif">
+                                    <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
+                                </li>
 
-                            <li class="nav-item @if (request()->is('tags*')) active @endif">
-                                <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
-                            </li>
+                                <li class="nav-item @if (request()->is('settings*')) active @endif">
+                                    <a class="nav-link" href="{{ route('settings.edit') }}">Settings</a>
+                                </li>
+                                <li class="nav-item @if (request()->is('ajax-tags*')) active @endif">
+                                    <a class="nav-link" href="{{ route('ajax-tags.index') }}">Ajax</a>
+                                </li>
+                            @endcan
 
 
 
                         @endauth
-                        <li class="nav-item @if (request()->is('ajax-tags*')) active @endif">
-                            <a class="nav-link" href="{{ route('ajax-tags.index') }}">Ajax</a>
-                        </li>
 
                     </ul>
 
                     <!-- Search Form -->
-                   
+
 
                     <!-- Right Side -->
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

@@ -19,7 +19,9 @@ class PostController extends Controller
 
     public function view()
     {
+        Debugbar::startMeasure('render','Time for rendering');
         $posts = Post::with('user','tags')->latest()->paginate(12);
+        Debugbar::stopMeasure('render');
         return view('posts.index', compact('posts'));
     }
 

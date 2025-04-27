@@ -42,12 +42,16 @@
                         </td>
 
                         <td>
-                            <img src="{{ asset('storage/' . $post->image) }}" width="200">
+                            @if ($post->image )
+
+                            <img src=" {{ asset('storage/' . $post->image )}}" width="200">
+                            @endif
 
                         </td>
                         <td>
                             @can('update-post', $post)
                                 <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-info">Edit</a>
+
 
 
                         </td>
@@ -58,9 +62,9 @@
                                 @csrf
                                 <input type="submit" class="btn btn-danger" value="Delete">
                             </form>
-                            @endcan
                         </td>
-                        <td></td>
+                        @endcan
+                        
                     </tr>
                 @endforeach()
             </tbody>

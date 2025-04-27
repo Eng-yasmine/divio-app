@@ -11,8 +11,9 @@ class UserController extends Controller
 {
     public function __construct()
     {
-       Gate::authorize('admin-control');
+        $this->middleware('can:admin-control');
     }
+
 
     /**
      * Display a listing of the resource.

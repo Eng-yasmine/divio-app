@@ -8,14 +8,13 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\front\PostController As FrontPostController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 
 
 
 Route::get('/', [FrontHomeController::class, 'index'])->name('front.home');
 Route::get('/about', [FrontHomeController::class, 'about'])->name('front.about');
-Route::get('/contact', [FrontHomeController::class, 'contact'])->name('front.contact');
-Route::post('/contact',[FrontHomeController::class,'SendMessage'])->name('SendMail');
 Route::get('search', [FrontPostController::class, 'search'])->name('front.search');
 
 Route::middleware('auth')->group(function () {
@@ -30,12 +29,17 @@ Route::middleware('auth')->group(function () {
     Route::put('posts/{id}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('posts/destroy/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 
+    Route::get('/contact', [FrontHomeController::class, 'contact'])->name('front.contact');
+    Route::post('/contact',[FrontHomeController::class,'SendMessage'])->name('SendMail');
 
-
-    Route::resource('users', UserController::class)->middleware('can:admin-control');
-    Route::resource('tags', TagController::class)->middleware('can:admin-control');
+    Route::resource('users', UserController::class);
+    Route::resource('tags', TagController::class);
     Route::get('users/posts/{id}', [UserController::class, 'posts'])->name('users.posts');
     Route::resource('ajax-tags',AjaxTagController::class);
+    Route::get('settings/edit',[SettingController::class,'edit'])->name('settings.edit')->middleware('can:admin-control');
+    Route::put('settings/update',[SettingController::class,'update'])->name('settings.update');
+
+
 });
 Auth::routes();
 

@@ -8,9 +8,7 @@ use App\Models\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-
 use Illuminate\Support\Facades\View;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,15 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        Gate::define('create-post', function (User $user) {
-            return $user->role == 'writer';
-        });
-        Gate::define('admin-control', function (User $user) {
-            return $user->role == 'admin';
-        });
-        Gate::define('update-post', function (User $user, Post $post) {
-            return $user->id == $post->user_id;
-        });
+        //
     }
 
     /**
@@ -35,8 +25,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Pagination
         Paginator::useBootstrapFive();
-        $setting = Setting::first() ?? new Setting();
-        View::share('setting', $setting);
+
+        // Share Settings
+        $settings = Setting::first() ?? new Setting();
+        View::share('settings', $settings);
+
+        // Define Gates هنا 👇
+        Gate::define('create-post', function (User $user) {
+            return $user->role == 'writer';
+        });
+
+        Gate::define('admin-control', function (User $user) {
+            return $user->role == 'admin';
+        });
+
+        Gate::define('update-post', function (User $user, Post $post) {
+            return $user->id == $post->user_id;
+        });
     }
 }
