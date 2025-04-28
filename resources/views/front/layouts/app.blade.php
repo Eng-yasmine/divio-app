@@ -29,7 +29,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="index.html">{{ $settings->sit_name }}</a>
+            <a class="navbar-brand" href="#">{{ $settings->sit_name }}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
@@ -49,16 +49,16 @@
 
 
                         <li class="nav-item"><a
-                                class="nav-link px-lg-3 py-3 py-lg-4  @if (request()->is('contact')) text-info @endif"
+                                class="nav-link px-lg-3 py-3 py-lg-4  @if (request()->is('contact*')) text-info @endif"
                                 href="{{ route('front.contact') }}">Contact</a></li>
 
                                 <li class="nav-item"><a
-                                    class="nav-link px-lg-3 py-3 py-lg-4  @if (request()->is('contact')) text-info @endif"
+                                    class="nav-link px-lg-3 py-3 py-lg-4  @if (request()->is('posts*')) text-info @endif"
                                     href="{{ route('posts.create') }}">ADD POST</a></li>
 
-                                    {{-- <li class="nav-item"><a
-                                        class="nav-link px-lg-3 py-3 py-lg-4  @if (request()->is('contact')) text-info @endif"
-                                        href="{{ route('tags.create') }}">ADD Tag</a></li> --}}
+                                    <li class="nav-item"><a
+                                        class="nav-link px-lg-3 py-3 py-lg-4  @if (request()->is('tags*')) text-info @endif"
+                                        href="{{ route('tags.create') }}">ADD Tag</a></li>
                     @endauth
                     @guest
                         <li class="nav-item">

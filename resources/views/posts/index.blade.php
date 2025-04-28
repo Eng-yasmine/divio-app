@@ -44,12 +44,12 @@
                         <td>
                             @if ($post->image )
 
-                            <img src=" {{ asset('storage/' . $post->image )}}" width="200">
+                            <img src="{{ $post->image() }}" width="200">
                             @endif
 
                         </td>
+                        @can('update-post', $post)
                         <td>
-                            @can('update-post', $post)
                                 <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-info">Edit</a>
 
 
@@ -64,7 +64,7 @@
                             </form>
                         </td>
                         @endcan
-                        
+
                     </tr>
                 @endforeach()
             </tbody>

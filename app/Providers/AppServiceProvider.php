@@ -38,11 +38,11 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('admin-control', function (User $user) {
-            return $user->role == 'admin';
+            return $user->role === 'admin';
         });
 
         Gate::define('update-post', function (User $user, Post $post) {
-            return $user->id == $post->user_id;
+            return $user->id == $post->user_id || $user->role === 'admin';
         });
     }
 }

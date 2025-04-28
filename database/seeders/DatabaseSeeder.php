@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
         User::factory(5)->create();
 
         User::factory(1)->create([
-
+            'name' => 'Yasmeen Khaled',
             'email' => 'yasmeen@yahoo.com',
             'password' => bcrypt('123456789'),
-            'role'=>'admin',
+            'role' => 'admin',
         ]);
         $this->call([
             PostSeeder::class,

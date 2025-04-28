@@ -10,7 +10,7 @@ class TagController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:admin-control');
+        $this->middleware('can:admin-control')->except('create','store','edit','update');
 
     }
     /**

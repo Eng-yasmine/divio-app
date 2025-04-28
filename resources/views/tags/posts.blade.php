@@ -3,7 +3,7 @@
 @section('content')
     <div class="col-12">
         <a href="{{ route('posts.create') }}" class="btn btn-primary my-3">Add new <i class="mdi mdi-post:"></i></a>
-        <h1 class="p-3 border text-center my-3">All posts for user {{ $user->name }}</h1>
+<h1 class="p-3 border text-center my-3">All posts for user {{ $user->name }} </h1>
         @if (@session('success'))
             <div class="alert alert-success">
                 <h2>{{ session('success') }}</h2>
@@ -35,6 +35,7 @@
 
 
                     <td>
+                        @can('update-post')
                         <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info">Edit</a>
 
 
@@ -43,6 +44,7 @@
                             @csrf
                             <input type="submit" class="btn btn-danger" value="Delete">
                         </form>
+                        @endcan
 
                     </td>
                     <td> </td>

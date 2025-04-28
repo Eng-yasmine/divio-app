@@ -23,9 +23,9 @@ class Post extends Model
     public function image()
     {
         if ($this->image) {
-
-            return (asset($this->image));
+            return asset('storage/' . $this->image); // لازم تضيفي 'storage/' بنفسك
         }
-        return (asset('default.png'));
+        return asset('default.png');
     }
+
 }
